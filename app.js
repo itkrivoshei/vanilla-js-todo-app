@@ -11,9 +11,17 @@ const clearButton = document.querySelector(".clear-button");
 let todos = loadTodos();
 let currentFilter = "all";
 
+function createId() {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
 function createTodo(text) {
   return {
-    id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+    id: createId(),
     text,
     completed: false,
     createdAt: new Date().toISOString(),
