@@ -1,128 +1,184 @@
+const STORAGE_KEY = "vanilla-js-todo-app.todos";
+
+const todoForm = document.querySelector(".todo-form");
 const todoInput = document.querySelector(".todo-input");
-const todoButton = document.querySelector(".todo-button");
 const todoList = document.querySelector(".todo-list");
+const todoCount = document.querySelector(".todo-count");
+const emptyState = document.querySelector(".empty-state");
+const filterButtons = document.querySelectorAll(".filter-button");
+const clearButton = document.querySelector(".clear-button");
 
-document.addEventListener("DOMContentLoaded", getTodos);
-todoButton.addEventListener("click", addTodo);
-todoList.addEventListener("click", deleteTodo);
+let todos = loadTodos();
+let currentFilter = "all";
 
-function addTodo(e) {
-  e.preventDefault();
-  
-  // Create todo div
-  const todoDiv = document.createElement("div");
-  todoDiv.classList.add("todo");
-  
-  // Create list
-  const newTodo = document.createElement("li");
-  newTodo.innerText = todoInput.value;
-  
-  // Save to local
-  saveLocalTodos(todoInput.value);
-  newTodo.classList.add("todo-item");
-  todoDiv.appendChild(newTodo);
-  todoInput.value = "";
-  
-  // Create Completed Button
-  const completedButton = document.createElement("button");
-  completedButton.innerHTML = `✓`;
-  completedButton.classList.add("complete-btn");
-  todoDiv.appendChild(completedButton);
-  
-  // Create trash button
-  const trashButton = document.createElement("button");
-  trashButton.innerHTML = `✗`;
-  trashButton.classList.add("trash-btn");
-  todoDiv.appendChild(trashButton);
-  
-  // Final Todo
-  todoList.appendChild(todoDiv);
+function createTodo(text) {
+  return {
+    id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+    text,
+    completed: false,
+    createdAt: new Date().toISOString(),
+  };
 }
 
-function deleteTodo(e) {
-  const item = e.target;
+function loadTodos() {
+  try {
+    const savedTodos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-  if (item.classList[0] === "trash-btn") {
-    const todo = item.parentElement;
-    
-    todo.classList.add("fall");
-    todo.classList.add("completed");
-    removeLocalTodos(todo);
-    
-    todo.addEventListener("transitionend", (e) => {
-      todo.remove();
+    return savedTodos.map((todo) => {
+      if (typeof todo === "string") {
+        return createTodo(todo);
+      }
+
+      return todo;
     });
-  }
-  
-  if (item.classList[0] === "complete-btn") {
-    const todo = item.parentElement;
-    
-    todo.classList.toggle("completed");
+  } catch {
+    return [];
   }
 }
 
-function saveLocalTodos(todo) {
-  let todos;
-  
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
-  
-  todos.push(todo);
-  localStorage.setItem("todos", JSON.stringify(todos));
+function saveTodos() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
 }
 
-function removeLocalTodos(todo) {
-  let todos;
-  
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
+function getVisibleTodos() {
+  if (currentFilter === "active") {
+    return todos.filter((todo) => !todo.completed);
   }
-  
-  const todoIndex = todo.children[0].innerText;
-  
-  todos.splice(todos.indexOf(todoIndex), 1);
-  localStorage.setItem("todos", JSON.stringify(todos));
+
+  if (currentFilter === "completed") {
+    return todos.filter((todo) => todo.completed);
+  }
+
+  return todos;
 }
 
-function getTodos() {
-  let todos;
-  
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
+function updateMeta() {
+  const activeCount = todos.filter((todo) => !todo.completed).length;
+  const taskLabel = activeCount === 1 ? "task" : "tasks";
+
+  todoCount.textContent = `${activeCount} ${taskLabel} left`;
+  emptyState.classList.toggle("visible", getVisibleTodos().length === 0);
+}
+
+function renderTodo(todo) {
+  const todoItem = document.createElement("li");
+  todoItem.className = `todo${todo.completed ? " completed" : ""}`;
+  todoItem.dataset.id = todo.id;
+
+  const statusDot = document.createElement("span");
+  statusDot.className = "status-dot";
+  statusDot.setAttribute("aria-hidden", "true");
+
+  const todoText = document.createElement("span");
+  todoText.className = "todo-text";
+  todoText.textContent = todo.text;
+
+  const completeButton = document.createElement("button");
+  completeButton.type = "button";
+  completeButton.className = "todo-action complete-btn";
+  completeButton.textContent = "✓";
+  completeButton.setAttribute("aria-label", todo.completed ? "Mark task as active" : "Mark task as completed");
+
+  const trashButton = document.createElement("button");
+  trashButton.type = "button";
+  trashButton.className = "todo-action trash-btn";
+  trashButton.textContent = "×";
+  trashButton.setAttribute("aria-label", "Delete task");
+
+  todoItem.append(statusDot, todoText, completeButton, trashButton);
+
+  return todoItem;
+}
+
+function renderTodos() {
+  todoList.replaceChildren(...getVisibleTodos().map(renderTodo));
+  updateMeta();
+}
+
+function addTodo(event) {
+  event.preventDefault();
+
+  const text = todoInput.value.trim();
+
+  if (!text) {
+    todoInput.focus();
+    return;
   }
-  
-  todos.forEach(function (todo) {
-    // Create todo div
-    const todoDiv = document.createElement("div");
-    todoDiv.classList.add("todo");
-    
-    // Create list
-    const newTodo = document.createElement("li");
-    newTodo.innerText = todo;
-    newTodo.classList.add("todo-item");
-    todoDiv.appendChild(newTodo);
-    todoInput.value = "";
-    
-    // Create Completed Button
-    const completedButton = document.createElement("button");
-    completedButton.innerHTML = `✓`;
-    completedButton.classList.add("complete-btn");
-    todoDiv.appendChild(completedButton);
-    
-    // Create trash button
-    const trashButton = document.createElement("button");
-    trashButton.innerHTML = `✗`;
-    trashButton.classList.add("trash-btn");
-    todoDiv.appendChild(trashButton);
-    
-    // Final Todo
-    todoList.appendChild(todoDiv);
+
+  todos.unshift(createTodo(text));
+  todoInput.value = "";
+  saveTodos();
+  renderTodos();
+}
+
+function toggleTodo(id) {
+  todos = todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo));
+  saveTodos();
+  renderTodos();
+}
+
+function deleteTodo(id) {
+  const todoItem = todoList.querySelector(`[data-id="${id}"]`);
+
+  if (todoItem) {
+    todoItem.classList.add("fall");
+    todoItem.addEventListener(
+      "transitionend",
+      () => {
+        todos = todos.filter((todo) => todo.id !== id);
+        saveTodos();
+        renderTodos();
+      },
+      { once: true },
+    );
+    return;
+  }
+
+  todos = todos.filter((todo) => todo.id !== id);
+  saveTodos();
+  renderTodos();
+}
+
+function clearCompleted() {
+  todos = todos.filter((todo) => !todo.completed);
+  saveTodos();
+  renderTodos();
+}
+
+function setFilter(filter) {
+  currentFilter = filter;
+
+  filterButtons.forEach((button) => {
+    const isActive = button.dataset.filter === filter;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
   });
+
+  renderTodos();
 }
+
+todoForm.addEventListener("submit", addTodo);
+
+clearButton.addEventListener("click", clearCompleted);
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => setFilter(button.dataset.filter));
+});
+
+todoList.addEventListener("click", (event) => {
+  const todoItem = event.target.closest(".todo");
+
+  if (!todoItem) {
+    return;
+  }
+
+  if (event.target.closest(".complete-btn")) {
+    toggleTodo(todoItem.dataset.id);
+  }
+
+  if (event.target.closest(".trash-btn")) {
+    deleteTodo(todoItem.dataset.id);
+  }
+});
+
+renderTodos();
