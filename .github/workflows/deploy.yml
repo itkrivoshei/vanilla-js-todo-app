@@ -31,8 +31,10 @@ jobs:
       - name: Validate required files
         run: |
           test -f index.html
-          test -f style.css
-          test -f app.js
+          test -f src/styles/main.css
+          test -f src/scripts/app.js
+          grep -q "src/styles/main.css" index.html
+          grep -q "src/scripts/app.js" index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
