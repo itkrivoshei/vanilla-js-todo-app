@@ -1,24 +1,70 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>TodoList</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="./style.css"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A lightweight vanilla JavaScript todo app with localStorage persistence and GitHub Pages deployment."
+    />
+    <title>Vanilla JS Todo App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./app.js" defer></script>
   </head>
   <body>
-    <header>
-      <h1>Todo List With Love ♡</h1>
-      <p>You can watch all the code here - <a href="https://github.com/IT-Krivoshey/Vanilla-Js-ToDoList">Vanilla-Js-ToDoList</a></p>
-    </header>
-    <div class="todo-container">
-      <ul class="todo-list"></ul>
-    </div>
-    <form>
-      <input type="text" class="todo-input"/>
-      <button class="todo-button" type="submit">Send</button>
-    </form>
-    <script src="./app.js"></script>
+    <main class="app-shell" aria-labelledby="app-title">
+      <section class="hero-card">
+        <p class="eyebrow">Vanilla JavaScript · LocalStorage · GitHub Pages</p>
+        <h1 id="app-title">Todo List With Love ♡</h1>
+        <p class="hero-copy">
+          A small, fast, dependency-free todo app. The original idea stays the same:
+          add tasks, finish them, delete them, and keep everything in your browser.
+        </p>
+        <a class="repo-link" href="https://github.com/itkrivoshei/vanilla-js-todo-app" target="_blank" rel="noreferrer">
+          View source on GitHub
+        </a>
+      </section>
+
+      <section class="todo-card" aria-label="Todo application">
+        <form class="todo-form" autocomplete="off">
+          <label class="sr-only" for="todo-input">New todo</label>
+          <input
+            id="todo-input"
+            class="todo-input"
+            type="text"
+            name="todo"
+            maxlength="120"
+            placeholder="Add a task..."
+            aria-label="New todo"
+            required
+          />
+          <button class="todo-button" type="submit">Add task</button>
+        </form>
+
+        <div class="toolbar" aria-label="Todo filters">
+          <div class="filters" role="group" aria-label="Filter todos">
+            <button class="filter-button active" type="button" data-filter="all">All</button>
+            <button class="filter-button" type="button" data-filter="active">Active</button>
+            <button class="filter-button" type="button" data-filter="completed">Completed</button>
+          </div>
+          <button class="clear-button" type="button">Clear completed</button>
+        </div>
+
+        <div class="todo-meta" aria-live="polite">
+          <span class="todo-count">0 tasks</span>
+          <span class="storage-note">Saved locally in this browser</span>
+        </div>
+
+        <ul class="todo-list" aria-label="Todo items"></ul>
+
+        <p class="empty-state">No tasks yet. Add one and keep it simple.</p>
+      </section>
+    </main>
   </body>
 </html>
