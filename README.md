@@ -1,37 +1,81 @@
-## 📝 Vanilla-Js-ToDoList
+# Vanilla JS Todo App
 
-To-Do List with Vanilla JS.
+A lightweight todo application built with HTML, CSS, and vanilla JavaScript.
 
-### 🔗 Demo
+The project keeps the original simple idea: add tasks, mark them as completed, delete them, and persist the list in the browser with `localStorage`. It has been refreshed with a more modern interface, better accessibility, cleaner state management, and automated GitHub Pages deployment.
 
-Check out the live demo: [Vanilla-Js-ToDoList](https://itkrivoshei.github.io/Vanilla-Js-ToDoList/)
+## Live Demo
 
-### 📂 Project Structure
+```text
+https://itkrivoshei.github.io/vanilla-js-todo-app/
+```
 
-| File      | Description                                              |
-|-----------|----------------------------------------------------------|
-| `index.html`  | Main HTML file containing the structure of the To-Do List application |
-| `style.css`   | CSS file for styling the To-Do List application       |
-| `app.js`      | JavaScript file containing the logic for the To-Do List application  |
+## Features
 
-### 🚀 How to Use
+- Add, complete, delete, and filter todos
+- Clear completed tasks
+- Local browser persistence with `localStorage`
+- Responsive modern UI
+- Accessible labels, focus states, and semantic structure
+- No framework and no build step
+- Automatic deployment to GitHub Pages with GitHub Actions
 
-1. **Clone the repository**:
-    ```sh
-    git clone https://github.com/IT-Krivoshey/Vanilla-Js-ToDoList.git
-    ```
-2. **Navigate to the project directory**:
-    ```sh
-    cd Vanilla-Js-ToDoList
-    ```
-3. **Open `index.html` in your browser** to see the To-Do List application in action.
+## Tech Stack
 
-### 🔧 Technologies Used
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- LocalStorage API
+- GitHub Actions
+- GitHub Pages
 
-- **HTML**: Structure of the To-Do List application.
-- **CSS**: Styling for the To-Do List application.
-- **JavaScript**: Logic for adding, deleting, and marking tasks as completed.
+## Project Structure
 
-### 📜 License
+```text
+.
+├── .github/workflows/deploy.yml
+├── index.html
+├── style.css
+├── app.js
+├── LICENSE
+└── README.md
+```
 
-This project is licensed under the LGPLv3 License - see the [LICENSE](LICENSE) file for details.
+## Local Usage
+
+Clone the repository:
+
+```bash
+git clone https://github.com/itkrivoshei/vanilla-js-todo-app.git
+cd vanilla-js-todo-app
+```
+
+Open `index.html` in a browser, or use any static server:
+
+```bash
+python3 -m http.server 4173
+```
+
+Then open:
+
+```text
+http://localhost:4173
+```
+
+## Deployment
+
+The project deploys automatically through GitHub Actions after every push to `main`.
+
+Required GitHub Pages setting:
+
+```text
+Settings → Pages → Source → GitHub Actions
+```
+
+## Repository Status
+
+This is a refreshed legacy portfolio project. The goal is to preserve the original small vanilla JavaScript concept while making the repository cleaner, more presentable, and easier to maintain.
+
+## License
+
+This project is licensed under the GPL-3.0 License. See the `LICENSE` file for details.
