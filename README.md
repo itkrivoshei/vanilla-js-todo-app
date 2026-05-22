@@ -2,7 +2,7 @@
 
 A lightweight todo application built with HTML, CSS, and vanilla JavaScript.
 
-The project keeps the original simple idea: add tasks, mark them as completed, delete them, and persist the list in the browser with `localStorage`. It has been refreshed with a more modern interface, better accessibility, cleaner state management, and automated GitHub Pages deployment.
+The app keeps a focused scope: add tasks, mark them as completed, delete them, filter the list, and keep data saved in the browser with `localStorage`. It uses a simple static structure, accessible markup, responsive styling, and automated deployment with GitHub Actions.
 
 ## Live Demo
 
@@ -12,13 +12,15 @@ https://itkrivoshei.github.io/vanilla-js-todo-app/
 
 ## Features
 
-- Add, complete, delete, and filter todos
-- Clear completed tasks
-- Local browser persistence with `localStorage`
-- Responsive modern UI
-- Accessible labels, focus states, and semantic structure
-- No framework and no build step
-- Automatic deployment to GitHub Pages with GitHub Actions
+- Add new todo items
+- Mark todos as completed or active
+- Delete individual todos
+- Filter by all, active, or completed items
+- Clear all completed items
+- Persist todos in the browser with `localStorage`
+- Responsive layout for desktop and mobile screens
+- Accessible form labels, semantic HTML, keyboard focus states, and live task count updates
+- Static deployment to GitHub Pages with GitHub Actions
 
 ## Tech Stack
 
@@ -33,15 +35,20 @@ https://itkrivoshei.github.io/vanilla-js-todo-app/
 
 ```text
 .
-├── .github/workflows/deploy.yml
+├── .github
+│   └── workflows
+│       └── deploy.yml
+├── src
+│   ├── scripts
+│   │   └── app.js
+│   └── styles
+│       └── main.css
 ├── index.html
-├── style.css
-├── app.js
 ├── LICENSE
 └── README.md
 ```
 
-## Local Usage
+## Getting Started
 
 Clone the repository:
 
@@ -50,7 +57,7 @@ git clone https://github.com/itkrivoshei/vanilla-js-todo-app.git
 cd vanilla-js-todo-app
 ```
 
-Open `index.html` in a browser, or use any static server:
+Open `index.html` directly in a browser, or serve the project locally:
 
 ```bash
 python3 -m http.server 4173
@@ -64,17 +71,19 @@ http://localhost:4173
 
 ## Deployment
 
-The project deploys automatically through GitHub Actions after every push to `main`.
+The project is deployed as a static site with GitHub Actions.
 
-Required GitHub Pages setting:
+The workflow validates the required source files, uploads the repository as a GitHub Pages artifact, and deploys it after every push to `main`.
+
+GitHub Pages should use this source:
 
 ```text
 Settings → Pages → Source → GitHub Actions
 ```
 
-## Repository Status
+## Notes
 
-This is a refreshed legacy portfolio project. The goal is to preserve the original small vanilla JavaScript concept while making the repository cleaner, more presentable, and easier to maintain.
+This project intentionally does not use a framework or build step. The goal is to keep the app small, readable, and easy to run while still using a clean source structure and automated deployment.
 
 ## License
 
