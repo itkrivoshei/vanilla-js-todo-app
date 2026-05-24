@@ -63,6 +63,7 @@ There is no build command. The repository is deployed as static files.
 ├── src
 │   ├── scripts/app.js
 │   └── styles/main.css
+├── favicon.svg
 ├── index.html
 ├── package.json
 ├── LICENSE
