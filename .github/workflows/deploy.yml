@@ -16,6 +16,7 @@ concurrency:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SITE_DIR: .site
 
 jobs:
   validate:
@@ -28,13 +29,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate required files
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate static files
+        run: npm run check
+
+      - name: Prepare Pages artifact
         run: |
-          test -f index.html
-          test -f src/styles/main.css
-          test -f src/scripts/app.js
-          grep -q "src/styles/main.css" index.html
-          grep -q "src/scripts/app.js" index.html
+          rm -rf "$SITE_DIR"
+          mkdir -p "$SITE_DIR/src"
+          cp index.html "$SITE_DIR/"
+          cp -R src/scripts "$SITE_DIR/src/"
+          cp -R src/styles "$SITE_DIR/src/"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -42,7 +51,7 @@ jobs:
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: ${{ env.SITE_DIR }}
 
       - name: Deploy to GitHub Pages
         id: deployment
