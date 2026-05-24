@@ -42,6 +42,7 @@ jobs:
           rm -rf "$SITE_DIR"
           mkdir -p "$SITE_DIR/src"
           cp index.html "$SITE_DIR/"
+          cp favicon.svg "$SITE_DIR/"
           cp -R src/scripts "$SITE_DIR/src/"
           cp -R src/styles "$SITE_DIR/src/"
 
