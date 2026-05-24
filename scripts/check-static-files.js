@@ -1,6 +1,6 @@
 import { access, readFile } from "node:fs/promises";
 
-const requiredFiles = ["index.html", "src/styles/main.css", "src/scripts/app.js"];
+const requiredFiles = ["index.html", "favicon.svg", "src/styles/main.css", "src/scripts/app.js"];
 
 async function fileExists(path) {
   try {
@@ -25,7 +25,7 @@ async function main() {
   }
 
   const indexHtml = await readFile("index.html", "utf8");
-  const requiredReferences = ["./src/styles/main.css", "./src/scripts/app.js"];
+  const requiredReferences = ["./favicon.svg", "./src/styles/main.css", "./src/scripts/app.js"];
   const missingReferences = requiredReferences.filter((reference) => !indexHtml.includes(reference));
 
   if (missingReferences.length > 0) {
