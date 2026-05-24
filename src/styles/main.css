@@ -5,8 +5,8 @@
   --color-text: #f8fafc;
   --color-muted: #cbd5e1;
   --color-muted-strong: #94a3b8;
-  --color-accent: #f472b6;
-  --color-accent-strong: #ec4899;
+  --color-accent: #38bdf8;
+  --color-accent-strong: #0ea5e9;
   --color-success: #34d399;
   --color-danger: #fb7185;
   --shadow-card: 0 24px 80px rgba(0, 0, 0, 0.34);
@@ -27,9 +27,9 @@ body {
   color: var(--color-text);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(244, 114, 182, 0.35), transparent 32rem),
-    radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.26), transparent 30rem),
-    linear-gradient(135deg, #111827 0%, #17182b 45%, #312244 100%);
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.34), transparent 32rem),
+    radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.2), transparent 30rem),
+    linear-gradient(135deg, #0f172a 0%, #111827 48%, #172033 100%);
 }
 
 button,
@@ -44,8 +44,13 @@ button {
 button:focus-visible,
 input:focus-visible,
 a:focus-visible {
-  outline: 3px solid rgba(244, 114, 182, 0.45);
+  outline: 3px solid rgba(56, 189, 248, 0.45);
   outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
 }
 
 .app-shell {
@@ -74,7 +79,7 @@ a:focus-visible {
 
 .eyebrow {
   margin-bottom: 1rem;
-  color: #f9a8d4;
+  color: #7dd3fc;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -96,6 +101,32 @@ h1 {
   line-height: 1.8;
 }
 
+.scope-list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.scope-list div {
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 1rem;
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.scope-list dt {
+  color: var(--color-text);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.scope-list dd {
+  margin-top: 0.24rem;
+  color: var(--color-muted-strong);
+  font-size: 0.86rem;
+}
+
 .repo-link {
   display: inline-flex;
   margin-top: 2rem;
@@ -113,7 +144,7 @@ h1 {
 
 .repo-link:hover {
   transform: translateY(-2px);
-  border-color: rgba(244, 114, 182, 0.7);
+  border-color: rgba(56, 189, 248, 0.7);
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -160,7 +191,7 @@ h1 {
 }
 
 .todo-button:hover,
-.clear-button:hover,
+.clear-button:hover:not(:disabled),
 .filter-button:hover,
 .todo-action:hover {
   transform: translateY(-1px);
@@ -191,8 +222,8 @@ h1 {
 }
 
 .filter-button.active {
-  background: rgba(244, 114, 182, 0.18);
-  color: #fbcfe8;
+  background: rgba(56, 189, 248, 0.18);
+  color: #bae6fd;
 }
 
 .clear-button {
@@ -235,7 +266,7 @@ h1 {
 }
 
 .todo:hover {
-  border-color: rgba(244, 114, 182, 0.34);
+  border-color: rgba(56, 189, 248, 0.34);
 }
 
 .todo.completed {
