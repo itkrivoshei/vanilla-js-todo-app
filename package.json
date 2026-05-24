@@ -1,0 +1,12 @@
+{
+  "name": "vanilla-js-todo-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A lightweight todo application built with HTML, CSS, and vanilla JavaScript.",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check-static-files.js",
+    "start": "python3 -m http.server 4173"
+  }
+}
