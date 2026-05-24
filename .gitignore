@@ -1,9 +1,10 @@
 # Dependencies
 node_modules/
 
-# Build output
+# Build and deploy output
 dist/
 build/
+.site/
 
 # Logs
 *.log
