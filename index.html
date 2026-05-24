@@ -21,11 +21,24 @@
     <main class="app-shell" aria-labelledby="app-title">
       <section class="hero-card">
         <p class="eyebrow">Vanilla JavaScript · LocalStorage · GitHub Pages</p>
-        <h1 id="app-title">Todo List With Love ♡</h1>
+        <h1 id="app-title">Local Todo List</h1>
         <p class="hero-copy">
-          A small, fast, dependency-free todo app. Add tasks, complete them, delete them,
-          and keep everything saved locally in your browser.
+          A small, dependency-free task list that runs in the browser and keeps data on the device.
         </p>
+        <dl class="scope-list" aria-label="Project scope">
+          <div>
+            <dt>No build step</dt>
+            <dd>Static HTML, CSS, and JavaScript</dd>
+          </div>
+          <div>
+            <dt>Local state</dt>
+            <dd>Saved with browser localStorage</dd>
+          </div>
+          <div>
+            <dt>Static deploy</dt>
+            <dd>Published through GitHub Pages</dd>
+          </div>
+        </dl>
         <a class="repo-link" href="https://github.com/itkrivoshei/vanilla-js-todo-app" target="_blank" rel="noreferrer">
           View source on GitHub
         </a>
@@ -63,7 +76,7 @@
 
         <ul class="todo-list" aria-label="Todo items"></ul>
 
-        <p class="empty-state">No tasks yet. Add one and keep it simple.</p>
+        <p class="empty-state">No tasks yet. Add one to start.</p>
       </section>
     </main>
   </body>
