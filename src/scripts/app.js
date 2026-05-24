@@ -1,4 +1,5 @@
 const STORAGE_KEY = "vanilla-js-todo-app.todos";
+const DELETE_ANIMATION_MS = 280;
 const FILTERS = {
   ALL: "all",
   ACTIVE: "active",
@@ -18,13 +19,33 @@ const selectors = {
   trashButton: ".trash-btn",
 };
 
-const todoForm = document.querySelector(selectors.form);
-const todoInput = document.querySelector(selectors.input);
-const todoList = document.querySelector(selectors.list);
-const todoCount = document.querySelector(selectors.count);
-const emptyState = document.querySelector(selectors.emptyState);
-const filterButtons = document.querySelectorAll(selectors.filterButton);
-const clearButton = document.querySelector(selectors.clearButton);
+function getRequiredElement(selector) {
+  const element = document.querySelector(selector);
+
+  if (!element) {
+    throw new Error(`Missing required element: ${selector}`);
+  }
+
+  return element;
+}
+
+function getRequiredElements(selector) {
+  const elements = document.querySelectorAll(selector);
+
+  if (elements.length === 0) {
+    throw new Error(`Missing required elements: ${selector}`);
+  }
+
+  return elements;
+}
+
+const todoForm = getRequiredElement(selectors.form);
+const todoInput = getRequiredElement(selectors.input);
+const todoList = getRequiredElement(selectors.list);
+const todoCount = getRequiredElement(selectors.count);
+const emptyState = getRequiredElement(selectors.emptyState);
+const filterButtons = getRequiredElements(selectors.filterButton);
+const clearButton = getRequiredElement(selectors.clearButton);
 
 let todos = loadTodos();
 let currentFilter = FILTERS.ALL;
@@ -86,11 +107,13 @@ function getVisibleTodos() {
 }
 
 function updateMeta() {
-  const activeCount = todos.filter((todo) => !todo.completed).length;
-  const taskLabel = activeCount === 1 ? "task" : "tasks";
+  const activeTodoCount = todos.filter((todo) => !todo.completed).length;
+  const completedTodoCount = todos.length - activeTodoCount;
+  const taskLabel = activeTodoCount === 1 ? "task" : "tasks";
 
-  todoCount.textContent = `${activeCount} ${taskLabel} left`;
+  todoCount.textContent = `${activeTodoCount} ${taskLabel} left`;
   emptyState.classList.toggle("visible", getVisibleTodos().length === 0);
+  clearButton.disabled = completedTodoCount === 0;
 }
 
 function renderTodo(todo) {
@@ -164,8 +187,19 @@ function deleteTodo(id) {
     return;
   }
 
+  let isRemoved = false;
+  const removeOnce = () => {
+    if (isRemoved) {
+      return;
+    }
+
+    isRemoved = true;
+    removeTodo(id);
+  };
+
   todoItem.classList.add("fall");
-  todoItem.addEventListener("transitionend", () => removeTodo(id), { once: true });
+  todoItem.addEventListener("transitionend", removeOnce, { once: true });
+  window.setTimeout(removeOnce, DELETE_ANIMATION_MS);
 }
 
 function clearCompleted() {
