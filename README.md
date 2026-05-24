@@ -1,54 +1,34 @@
 # Vanilla JS Todo App
 
-A lightweight todo application built with HTML, CSS, and vanilla JavaScript.
+[![Deploy](https://img.shields.io/github/actions/workflow/status/itkrivoshei/vanilla-js-todo-app/deploy.yml?branch=main&style=flat-square&label=deploy)](https://github.com/itkrivoshei/vanilla-js-todo-app/actions/workflows/deploy.yml)
+[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](./LICENSE)
 
-The app keeps a focused scope: add tasks, mark them as completed, delete them, filter the list, and keep data saved in the browser with `localStorage`. It uses a simple static structure, accessible markup, responsive styling, and automated deployment with GitHub Actions.
+A small static todo app built with HTML, CSS, and vanilla JavaScript with browser `localStorage` persistence.
 
-## Live Demo
+## Tech stack
 
-```text
-https://itkrivoshei.github.io/vanilla-js-todo-app/
-```
-
-## Features
-
-- Add new todo items
-- Mark todos as completed or active
-- Delete individual todos
-- Filter by all, active, or completed items
-- Clear all completed items
-- Persist todos in the browser with `localStorage`
-- Responsive layout for desktop and mobile screens
-- Accessible form labels, semantic HTML, keyboard focus states, and live task count updates
-- Static deployment to GitHub Pages with GitHub Actions
-
-## Tech Stack
-
-- HTML5
-- CSS3
+- HTML
+- CSS
 - Vanilla JavaScript
 - LocalStorage API
 - GitHub Actions
 - GitHub Pages
 
-## Project Structure
+## Scope
+
+- Add, complete, delete, and filter todo items
+- Clear completed items
+- Persist data in the browser
+- Run without a framework or build step
+- Deploy as a static site through GitHub Pages
+
+## Live demo
 
 ```text
-.
-├── .github
-│   └── workflows
-│       └── deploy.yml
-├── src
-│   ├── scripts
-│   │   └── app.js
-│   └── styles
-│       └── main.css
-├── index.html
-├── LICENSE
-└── README.md
+https://itkrivoshei.github.io/vanilla-js-todo-app/
 ```
 
-## Getting Started
+## Getting started
 
 Clone the repository:
 
@@ -57,34 +37,48 @@ git clone https://github.com/itkrivoshei/vanilla-js-todo-app.git
 cd vanilla-js-todo-app
 ```
 
-Open `index.html` directly in a browser, or serve the project locally:
+No dependency installation is required for the app itself.
 
-```bash
-python3 -m http.server 4173
-```
+## Commands
 
-Then open:
+| Command | Description |
+| --- | --- |
+| `npm run check` | Verify required static files and local asset references. |
+| `npm start` | Serve the app locally on port `4173` with Python's static server. |
+
+Open after starting the local server:
 
 ```text
 http://localhost:4173
 ```
 
+There is no build command. The repository is deployed as static files.
+
+## Project structure
+
+```text
+.
+├── .github/workflows/deploy.yml
+├── scripts/check-static-files.js
+├── src
+│   ├── scripts/app.js
+│   └── styles/main.css
+├── index.html
+├── package.json
+├── LICENSE
+└── README.md
+```
+
 ## Deployment
 
-The project is deployed as a static site with GitHub Actions.
+GitHub Actions validates the static files, prepares a small Pages artifact, and deploys it to GitHub Pages on pushes to `main`.
 
-The workflow validates the required source files, uploads the repository as a GitHub Pages artifact, and deploys it after every push to `main`.
-
-GitHub Pages should use this source:
+Required GitHub Pages setting:
 
 ```text
 Settings → Pages → Source → GitHub Actions
 ```
 
-## Notes
-
-This project intentionally does not use a framework or build step. The goal is to keep the app small, readable, and easy to run while still using a clean source structure and automated deployment.
-
 ## License
 
-This project is licensed under the GPL-3.0 License. See the `LICENSE` file for details.
+This project is licensed under the [GPL-3.0 License](./LICENSE).
