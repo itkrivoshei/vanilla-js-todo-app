@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+.site/
+coverage/
+.cache/
+.parcel-cache/
+.vite/
+package-lock.json

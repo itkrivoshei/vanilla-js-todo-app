@@ -1,0 +1,58 @@
+name: Dependabot Auto Merge
+
+on:
+  workflow_run:
+    workflows: ["Static CI"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dependabot-auto-merge-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    name: Merge Dependabot PR after green CI
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Merge Dependabot pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+
+          PR_NUMBER="$(gh api "repos/$REPO/actions/runs/$RUN_ID/pulls" --jq '.[0].number // empty')"
+
+          if [ -z "$PR_NUMBER" ]; then
+            echo "No pull request is attached to this workflow run."
+            exit 0
+          fi
+
+          AUTHOR="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json author --jq '.author.login')"
+          STATE="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json state --jq '.state')"
+          IS_DRAFT="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json isDraft --jq '.isDraft')"
+
+          if [ "$AUTHOR" != "dependabot[bot]" ]; then
+            echo "PR #$PR_NUMBER was created by $AUTHOR, not Dependabot. Skipping."
+            exit 0
+          fi
+
+          if [ "$STATE" != "OPEN" ]; then
+            echo "PR #$PR_NUMBER is not open. Skipping."
+            exit 0
+          fi
+
+          if [ "$IS_DRAFT" = "true" ]; then
+            echo "PR #$PR_NUMBER is draft. Skipping."
+            exit 0
+          fi
+
+          gh pr merge "$PR_NUMBER" --repo "$REPO" --squash --delete-branch

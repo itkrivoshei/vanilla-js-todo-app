@@ -25,10 +25,24 @@ html {
 body {
   min-height: 100vh;
   color: var(--color-text);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.34), transparent 32rem),
-    radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.2), transparent 30rem),
+    radial-gradient(
+      circle at top left,
+      rgba(56, 189, 248, 0.34),
+      transparent 32rem
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(52, 211, 153, 0.2),
+      transparent 30rem
+    ),
     linear-gradient(135deg, #0f172a 0%, #111827 48%, #172033 100%);
 }
 
@@ -184,7 +198,11 @@ h1 {
 
 .todo-button {
   border-radius: 1.1rem;
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+  background: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--color-accent-strong)
+  );
   color: #fff;
   padding: 1rem 1.2rem;
   font-weight: 800;

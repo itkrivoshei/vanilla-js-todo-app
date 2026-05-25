@@ -7,6 +7,21 @@
   "type": "module",
   "scripts": {
     "check": "node scripts/check-static-files.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"index.html\" \"src/**/*.css\" \"src/**/*.js\" \"scripts/**/*.js\" \".github/**/*.yml\" \"eslint.config.mjs\" \"package.json\"",
+    "format:check": "prettier --check \"index.html\" \"src/**/*.css\" \"src/**/*.js\" \"scripts/**/*.js\" \".github/**/*.yml\" \"eslint.config.mjs\" \"package.json\"",
+    "build": "node scripts/build-pages-artifact.js",
+    "verify": "npm run check && npm run lint && npm run format:check && npm run build",
     "start": "python3 -m http.server 4173"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3"
   }
 }

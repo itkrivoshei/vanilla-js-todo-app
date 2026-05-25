@@ -133,7 +133,10 @@ function renderTodo(todo) {
   completeButton.type = "button";
   completeButton.className = "todo-action complete-btn";
   completeButton.textContent = "✓";
-  completeButton.setAttribute("aria-label", todo.completed ? "Mark task as active" : "Mark task as completed");
+  completeButton.setAttribute(
+    "aria-label",
+    todo.completed ? "Mark task as active" : "Mark task as completed",
+  );
 
   const trashButton = document.createElement("button");
   trashButton.type = "button";
@@ -168,7 +171,9 @@ function addTodo(event) {
 }
 
 function toggleTodo(id) {
-  todos = todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo));
+  todos = todos.map((todo) =>
+    todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+  );
   saveTodos();
   renderTodos();
 }

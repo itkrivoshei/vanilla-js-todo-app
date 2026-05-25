@@ -1,4 +1,4 @@
-name: Deploy static site to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -11,20 +11,15 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages-${{ github.ref }}
-  cancel-in-progress: true
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  SITE_DIR: .site
+  group: github-pages
+  cancel-in-progress: false
 
 jobs:
-  validate:
-    name: Validate and deploy
+  build:
+    name: Build static artifact
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 10
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,28 +27,34 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: "22"
+          cache: "npm"
 
-      - name: Validate static files
-        run: npm run check
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Prepare Pages artifact
-        run: |
-          rm -rf "$SITE_DIR"
-          mkdir -p "$SITE_DIR/src"
-          cp index.html "$SITE_DIR/"
-          cp favicon.svg "$SITE_DIR/"
-          cp -R src/scripts "$SITE_DIR/src/"
-          cp -R src/styles "$SITE_DIR/src/"
+      - name: Verify and build artifact
+        run: npm run verify
 
-      - name: Configure GitHub Pages
+      - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload static site artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.SITE_DIR }}
+          path: .site
 
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
