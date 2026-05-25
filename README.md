@@ -22,30 +22,19 @@ Live demo: [itkrivoshei.github.io/vanilla-js-todo-app](https://itkrivoshei.githu
 |---|---|
 | UI | HTML, CSS, vanilla JavaScript |
 | Storage | Browser `localStorage` |
-| Linting | ESLint |
-| Formatting | Prettier |
-| CI/CD | GitHub Actions |
-| Deployment | GitHub Pages |
+| Linting / formatting | ESLint, Prettier |
+| CI/CD | GitHub Actions, GitHub Pages |
 | Dependency updates | Dependabot |
 
 ## Install
 
-Clone the repository:
-
 ```bash
 git clone git@github.com:itkrivoshei/vanilla-js-todo-app.git
 cd vanilla-js-todo-app
-```
-
-Install development dependencies:
-
-```bash
 npm ci
 ```
 
 ## Run
-
-Start a local static server:
 
 ```bash
 npm start
@@ -65,93 +54,37 @@ Run all local checks:
 npm run verify
 ```
 
-This command runs:
-
-```text
-static file check
-ESLint
-Prettier check
-Pages artifact build
-```
-
-Useful individual commands:
+Useful commands:
 
 | Command | Description |
 |---|---|
-| `npm run check` | Verify required static files and asset references |
+| `npm run check` | Validate required static files and asset references |
 | `npm run lint` | Run ESLint |
 | `npm run format:check` | Check formatting with Prettier |
 | `npm run build` | Generate the GitHub Pages artifact in `.site/` |
-| `npm start` | Serve the app locally on port `4173` |
+| `npm start` | Serve the app locally |
 
 ## CI/CD
 
-`Static CI` runs on pushes and pull requests to `main`.
+`Static CI` runs on pushes and pull requests to `main`. It validates dependency installation, static file references, ESLint, Prettier, and Pages artifact generation.
 
-It checks:
+`Deploy to GitHub Pages` runs on pushes to `main` and publishes the generated `.site/` artifact. Dependabot checks npm and GitHub Actions dependencies weekly and is auto-merged after successful CI.
 
-- dependency installation with `npm ci`
-- static file references
-- ESLint
-- Prettier formatting
-- Pages artifact generation
-
-`Deploy to GitHub Pages` runs on pushes to `main` and publishes the generated `.site/` artifact.
-
-Dependabot checks npm and GitHub Actions dependencies weekly. Dependabot pull requests are automatically squash-merged after successful CI.
-
-## Project Structure
-
-```text
-.
-├── .github/
-│   ├── dependabot.yml
-│   └── workflows/
-│       ├── ci.yml
-│       ├── deploy.yml
-│       └── dependabot-auto-merge.yml
-├── scripts/
-│   ├── build-pages-artifact.js
-│   └── check-static-files.js
-├── src/
-│   ├── scripts/
-│   │   └── app.js
-│   └── styles/
-│       └── main.css
-├── eslint.config.mjs
-├── favicon.svg
-├── index.html
-├── package-lock.json
-├── package.json
-└── README.md
-```
-
-## Key Files
+## Project Files
 
 | File | Purpose |
 |---|---|
 | [`index.html`](index.html) | Static app entry point |
-| [`src/scripts/app.js`](src/scripts/app.js) | Todo app logic and `localStorage` persistence |
+| [`src/scripts/app.js`](src/scripts/app.js) | Todo logic and `localStorage` persistence |
 | [`src/styles/main.css`](src/styles/main.css) | App styles |
-| [`scripts/check-static-files.js`](scripts/check-static-files.js) | Static file and asset reference validation |
+| [`scripts/check-static-files.js`](scripts/check-static-files.js) | Static file validation |
 | [`scripts/build-pages-artifact.js`](scripts/build-pages-artifact.js) | GitHub Pages artifact builder |
 | [`eslint.config.mjs`](eslint.config.mjs) | ESLint flat config |
 | [`package.json`](package.json) | npm scripts and dev tooling |
 | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Static CI workflow |
 | [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) | GitHub Pages deployment workflow |
-| [`.github/workflows/dependabot-auto-merge.yml`](.github/workflows/dependabot-auto-merge.yml) | Dependabot auto-merge after green CI |
-| [`.github/dependabot.yml`](.github/dependabot.yml) | Weekly dependency update checks |
+| [`.github/dependabot.yml`](.github/dependabot.yml) | Weekly dependency updates |
 | [`LICENSE`](LICENSE) | GPL-3.0 license |
-
-## Deployment
-
-GitHub Pages uses the workflow in [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
-
-Required repository setting:
-
-```text
-Settings → Pages → Source → GitHub Actions
-```
 
 ## License
 
