@@ -16,7 +16,7 @@
     "start": "python3 -m http.server 4173"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
