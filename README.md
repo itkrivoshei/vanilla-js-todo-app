@@ -10,8 +10,6 @@ Zero-framework todo list with localStorage persistence, static validation, and G
 [![JavaScript](https://img.shields.io/badge/JavaScript-vanilla-f7df1e?style=for-the-badge&logo=javascript&logoColor=000)](src/scripts/app.js)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue?style=for-the-badge)](LICENSE)
 
-### [Open Live App ->](https://itkrivoshei.github.io/vanilla-js-todo-app/)
-
 </div>
 
 ## Features
@@ -63,8 +61,6 @@ scripts/
 ## Deployment
 
 `Static CI` validates the app on pushes and pull requests to `main`. `Deploy to GitHub Pages` runs on pushes to `main`, builds `.site/`, and publishes that artifact through GitHub Pages.
-
-Live app: https://itkrivoshei.github.io/vanilla-js-todo-app/
 
 ## License
 
