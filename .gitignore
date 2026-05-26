@@ -36,3 +36,7 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+.env.local
+__pycache__/
+*.pyc
+.pytest_cache/
